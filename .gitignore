@@ -1,8 +1,4 @@
-#ignore pdf files
-*.pdf
 
-#ignore the tweet data
-tweet_collection.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
