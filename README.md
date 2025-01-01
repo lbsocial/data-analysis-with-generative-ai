@@ -14,6 +14,9 @@ Tutorials on learning generative AI in data analysis
 6. [OpenAI Assistant Crafting Email Responses](OpenAI-Assistant-Crafting-Email-Responses.ipynb)
      * [Tutorial](https://www.lbsocial.net/post/openai-assistant-automating-email-replies-for-professors-and-students)
 
+## 🎥 Video Demos Available!
+Comprehensive video demos for these topics are available at **[LBSocial.net](https://lbsocial.net)**. Explore step-by-step tutorials and gain a deeper understanding of the concepts.
+
 ## Recommended resources
 - OpenAI. n.d. *“OpenAI Documents.”* OpenAI. Accessed October 18, 2024. https://platform.openai.com.
 - DeepLearning.AI. n.d. *“DeepLearning.AI: Start or Advance Your Career in AI.”* Accessed October 29, 2024. https://www.deeplearning.ai/.
