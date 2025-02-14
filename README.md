@@ -13,6 +13,8 @@ Tutorials on learning generative AI in data analysis
      * [Tutorial](https://www.lbsocial.net/post/openai-function-calling-automate-and-enhance-grading-with-llms)
 6. [OpenAI Assistant Crafting Email Responses](OpenAI-Assistant-Crafting-Email-Responses.ipynb)
      * [Tutorial](https://www.lbsocial.net/post/openai-assistant-automating-email-replies-for-professors-and-students)
+7. [Analyzing Data and Interpreting Images with OpenAI's o1 Reasoning Model vs. GPT](Openai_o1_Reasoning_vs_GPT.ipynb)
+     * [Tutorial](https://www.lbsocial.net/post/openai-o1-reasoning-model-vs-gpt-smarter-ai-for-data-images)
 
 ## 🎥 Video Demos Available!
 Comprehensive video demos for these topics are available at **[LBSocial.net](https://lbsocial.net)**. Explore step-by-step tutorials and gain a deeper understanding of the concepts.
