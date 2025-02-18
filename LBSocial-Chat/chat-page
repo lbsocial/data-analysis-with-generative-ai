@@ -1,0 +1,43 @@
+// frontend to receive user input and pass them to chatbot, also log all messages in the logMessage list
+// use sendchat to send back the answer to user
+
+import { generateBotAnswer } from 'backend/chatbot';
+import { sendChatMessage } from 'backend/wix-chat'
+
+$w.onReady(function () {
+
+    let messages = [];
+
+    const logMessage = (role, content) => {
+        const message = {
+
+            role,
+            content,
+
+        }
+        messages.push(message);
+
+    }
+    $w('#wixChat').onMessageSent(async (message) => {
+
+            const channelId = message.channelId;
+            const messageText = message.payload.text;
+
+            // console.log(messageText)
+
+            logMessage("user", messageText);
+            // console.log(messages);
+
+            const answer = await generateBotAnswer(messages);
+            // console.log(answer)
+
+            logMessage(answer.role, answer.content);
+
+            sendChatMessage(answer.content, channelId)
+            
+
+        }
+
+    )
+
+});
