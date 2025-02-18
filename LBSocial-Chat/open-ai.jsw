@@ -1,0 +1,40 @@
+// pass prmopt to openai and return onpenai response 
+
+import { fetch } from 'wix-fetch';
+import { getSecret } from 'wix-secrets-backend';
+
+
+
+export const getResponse = async (messages) => {
+    const url = "https://api.openai.com/v1/chat/completions"
+    const apiKey = await getSecret("OPENAI-API-KEY");
+    // console.log(apiKey)
+    const body = {
+        "model": "gpt-3.5-turbo",
+         messages,
+        "max_tokens": 1000,
+        "temperature": 0,
+        // "stream": true
+    };
+
+    const options = {
+        method: "POST",
+        headers: {
+            'Content-Type': "application/json",
+            'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify(body),
+    };
+    try {
+
+        const response = await fetch(url, options);
+        // console.log(response);
+        const data = await response.json();
+        console.log(data);
+        return data?.choices[0].message;
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
