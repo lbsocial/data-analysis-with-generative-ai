@@ -1,18 +1,24 @@
+import { sendMessageToAssistant } from "backend/open-ai";
 import wixChatBackend from "wix-chat-backend";
 
-export async function sendChatMessage(messageText, channelId) {
+let isProcessing = false;  // Prevent concurrent requests
+
+export async function handleUserMessage(userMessage, channelId) {
+    if (isProcessing) return;  // Prevent duplicate requests
+    isProcessing = true;
 
     try {
+        const assistantResponse = await sendMessageToAssistant(userMessage, channelId);
+
         await wixChatBackend.sendMessage({
-            "messageText": messageText,
-            "channelId": channelId,
+            messageText: assistantResponse,
+            channelId: channelId,
+            sendAsVisitor: false
+        });
 
-            "sendAsVisitor": false,
-        })
-
-        console.log("Chat message sent");
     } catch (error) {
-        console.log(error)
+        console.error("Error processing message:", error);
+    } finally {
+        isProcessing = false;  // Reset state after completion
     }
-
 }

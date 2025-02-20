@@ -1,18 +1,5 @@
-//receive messages from user input and pass to openai, and return resonse to chat
+import { handleUserMessage } from "backend/wix-chat";
 
-import { getResponse } from 'backend/open-ai';
-
-export const generateBotAnswer = async (messages) => {
-
-    let systemInstructions = `You are an TA of the LBSocial website which teach data science in the cloud.`;
-    let systemMessage = {
-        role: "system",
-        content: systemInstructions,
-
-    }
-
-    let lastMessages = messages.slice(-6);
-    lastMessages.unshift(systemMessage);
-    const answer = await getResponse(lastMessages)
-    return answer;
+export function generateBotAnswer(userMessage, channelId) {
+    return handleUserMessage(userMessage, channelId);
 }

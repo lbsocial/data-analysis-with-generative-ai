@@ -1,43 +1,27 @@
-// frontend to receive user input and pass them to chatbot, also log all messages in the logMessage list
-// use sendchat to send back the answer to user
-
-import { generateBotAnswer } from 'backend/chatbot';
-import { sendChatMessage } from 'backend/wix-chat'
+import { handleUserMessage } from 'backend/wix-chat';
 
 $w.onReady(function () {
-
-    let messages = [];
+    let messages = []; // Store conversation log
 
     const logMessage = (role, content) => {
-        const message = {
+        messages.push({ role, content });
+    };
 
-            role,
-            content,
-
-        }
-        messages.push(message);
-
-    }
+    // Handle user messages from Wix Chatbox
     $w('#wixChat').onMessageSent(async (message) => {
+        const channelId = message.channelId;
+        const userMessage = message.payload.text;
 
-            const channelId = message.channelId;
-            const messageText = message.payload.text;
+        logMessage("user", userMessage);
 
-            // console.log(messageText)
+        // Send message to backend chatbot
+        await handleUserMessage(userMessage, channelId);
+    });
 
-            logMessage("user", messageText);
-            // console.log(messages);
-
-            const answer = await generateBotAnswer(messages);
-            // console.log(answer)
-
-            logMessage(answer.role, answer.content);
-
-            sendChatMessage(answer.content, channelId)
-            
-
+    // Ensure bot responses are not logged as user messages
+    $w('#wixChat').onMessageReceived((message) => {
+        if (message.direction === "BusinessToVisitor") {
+            logMessage("bot", message.payload.text);
         }
-
-    )
-
+    });
 });
