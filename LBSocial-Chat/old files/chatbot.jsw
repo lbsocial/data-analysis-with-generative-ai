@@ -1,5 +1,0 @@
-import { handleUserMessage } from "backend/wix-chat";
-
-export function generateBotAnswer(userMessage, channelId) {
-    return handleUserMessage(userMessage, channelId);
-}
