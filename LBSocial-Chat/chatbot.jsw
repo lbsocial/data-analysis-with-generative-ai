@@ -22,7 +22,7 @@ async function getThreadId(channelId) {
     return result.items.length > 0 ? result.items[0].threadId : null;
 }
 
-// **Send Message to OpenAI Assistant**
+// **Send Message to OpenAI Assistant with File Search**
 async function sendMessageToAssistant(userMessage, channelId) {
     const { apiKey, assistantId } = await getOpenAISecrets();
 
@@ -47,7 +47,7 @@ async function sendMessageToAssistant(userMessage, channelId) {
         body: JSON.stringify({ role: "user", content: userMessage })
     });
 
-    // **Start Assistant Processing**
+    // **Start Assistant Processing with File Search Enabled**
     let runResponse = await fetch(`${OPENAI_BASE_URL}/threads/${threadId}/runs`, {
         method: "POST",
         headers: {
@@ -55,7 +55,10 @@ async function sendMessageToAssistant(userMessage, channelId) {
             "Content-Type": "application/json",
             "OpenAI-Beta": "assistants=v2"
         },
-        body: JSON.stringify({ assistant_id: assistantId })
+        body: JSON.stringify({
+            assistant_id: assistantId,
+            tools: [{ type: "file_search" }]  // ✅ Enables file search
+        })
     });
 
     let runData = await runResponse.json();
@@ -133,7 +136,7 @@ async function sendMessageToAssistant(userMessage, channelId) {
     return assistantResponse;
 }
 
-// **Handle User Message and Send Response to Wix Chat (Without Updating Messages)**
+// **Handle User Message and Send Response to Wix Chat**
 export async function handleUserMessage(userMessage, channelId) {
     try {
         // **Step 1: Show "Thinking..." Message**
