@@ -22,42 +22,18 @@ async function getThreadId(channelId) {
     return result.items.length > 0 ? result.items[0].threadId : null;
 }
 
-// **Fix: Delete Old Thread & Start Fresh If Needed**
-async function deleteThread(apiKey, threadId) {
-    await fetch(`${OPENAI_BASE_URL}/threads/${threadId}`, {
-        method: "DELETE",
-        headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json"
-        }
-    });
-    console.log(`✅ Deleted OpenAI Thread: ${threadId}`);
-}
-
-// Create a new Assistant Thread
-async function createThread(apiKey) {
-    const response = await fetch(`${OPENAI_BASE_URL}/threads`, {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-            "OpenAI-Beta": "assistants=v2"
-        }
-    });
-
-    const data = await response.json();
-    return data.id;
-}
-
-// **Fix: Ensure Correct Assistant Response is Retrieved**
+// **Send Message to OpenAI Assistant**
 async function sendMessageToAssistant(userMessage, channelId) {
     const { apiKey, assistantId } = await getOpenAISecrets();
 
     let threadId = await getThreadId(channelId);
-
+    
     if (!threadId) {
+        console.log("🔄 Creating a new thread...");
         threadId = await createThread(apiKey);
         await saveThreadId(channelId, threadId);
+    } else {
+        console.log("🔄 Using existing thread:", threadId);
     }
 
     // Send user message to OpenAI Assistant
@@ -92,10 +68,10 @@ async function sendMessageToAssistant(userMessage, channelId) {
 
     let runId = runData.id;
 
-    // **Fix: Wait until OpenAI completes processing**
+    // **Wait until OpenAI completes processing**
     let status = "queued";
     while (status !== "completed") {
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds before checking status
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         let statusResponse = await fetch(`${OPENAI_BASE_URL}/threads/${threadId}/runs/${runId}`, {
             method: "GET",
@@ -116,7 +92,7 @@ async function sendMessageToAssistant(userMessage, channelId) {
         status = statusData.status;
     }
 
-    // **Retrieve the Correct AI Response**
+    // **Retrieve the Latest AI Response**
     let messagesResponse = await fetch(`${OPENAI_BASE_URL}/threads/${threadId}/messages`, {
         method: "GET",
         headers: {
@@ -132,62 +108,52 @@ async function sendMessageToAssistant(userMessage, channelId) {
         return "⚠️ No response from AI.";
     }
 
-    // **Fix: Retrieve only the latest assistant message**
-    let assistantMessages = messagesData.data.filter(msg => msg.role === "assistant");
+    // **Fix: Always pick the latest assistant message based on timestamp**
+    let assistantMessages = messagesData.data
+        .filter(msg => msg.role === "assistant")
+        .sort((a, b) => b.created_at - a.created_at); // Sort messages from newest to oldest
 
     if (assistantMessages.length === 0) {
         console.error("🚨 No assistant response found!");
         return "⚠️ AI response was invalid.";
     }
 
-    // **Ensure the last AI response is fully extracted**
-    let assistantResponse = assistantMessages[assistantMessages.length - 1]?.content?.[0]?.text?.value || "";
+    // **Get the most recent assistant response (first in sorted list)**
+    let assistantResponse = assistantMessages[0].content[0].text.value; 
+
+    console.log("🔎 Debug: Assistant Messages List (Sorted):", assistantMessages);
+    console.log("🔎 Debug: Latest AI Response Selected:", assistantResponse);
 
     if (!assistantResponse || assistantResponse.trim().length === 0) {
         console.error("🚨 OpenAI sent an empty response!");
         return "⚠️ AI response was empty.";
     }
 
-    // **Log final response before sending to Wix Chat**
     console.log("🟢 Final Assistant Response:", assistantResponse);
-
     return assistantResponse;
 }
 
 // **Handle User Message and Send Response to Wix Chat**
 export async function handleUserMessage(userMessage, channelId) {
     try {
-        // **Fix: Store "Typing..." message ID to update later**
         let typingMessage = await wixChatBackend.sendMessage({
             messageText: "⏳ Typing...",
             channelId: channelId,
             sendAsVisitor: false
         });
 
-        // **Ensure we start a fresh thread if needed**
-        const { apiKey } = await getOpenAISecrets();
-        let threadId = await getThreadId(channelId);
-        if (threadId) {
-            await deleteThread(apiKey, threadId);
-            threadId = await createThread(apiKey);
-            await saveThreadId(channelId, threadId);
-        }
-
-        // Get AI response
         let assistantResponse = await sendMessageToAssistant(userMessage, channelId);
 
-        console.log("🟢 Assistant Response:", assistantResponse);  // Debugging Log
+        console.log("🟢 Assistant Response:", assistantResponse); 
+        console.log("📤 Debug: Message Wix Chat Will Receive:", assistantResponse);
 
-        // **Fix: Ensure response is meaningful**
-        if (typeof assistantResponse !== "string" || assistantResponse.trim() === "") {
+        if (typeof assistantResponse !== "string" || assistantResponse.trim().length === "") {
             console.error("🚨 Invalid AI response format:", assistantResponse);
             assistantResponse = "⚠️ AI response was invalid.";
         }
 
-        // **Fix: Log before sending message**
         console.log("📤 Sending to Wix Chat:", assistantResponse);
 
-        // Send real response to Wix Chat
         await wixChatBackend.sendMessage({
             messageText: assistantResponse,
             channelId: channelId,
@@ -197,4 +163,19 @@ export async function handleUserMessage(userMessage, channelId) {
     } catch (error) {
         console.error("🚨 Error processing message:", error);
     }
+}
+
+// **Create a New OpenAI Thread**
+async function createThread(apiKey) {
+    const response = await fetch(`${OPENAI_BASE_URL}/threads`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${apiKey}`,
+            "Content-Type": "application/json",
+            "OpenAI-Beta": "assistants=v2"
+        }
+    });
+
+    const data = await response.json();
+    return data.id;
 }
