@@ -133,27 +133,29 @@ async function sendMessageToAssistant(userMessage, channelId) {
     return assistantResponse;
 }
 
-// **Handle User Message and Send Response to Wix Chat**
+// **Handle User Message and Send Response to Wix Chat (Without Updating Messages)**
 export async function handleUserMessage(userMessage, channelId) {
     try {
-        let typingMessage = await wixChatBackend.sendMessage({
-            messageText: "⏳ Typing...",
+        // **Step 1: Show "Thinking..." Message**
+        await wixChatBackend.sendMessage({
+            messageText: "🤔 Thinking...",
             channelId: channelId,
             sendAsVisitor: false
         });
 
+        // **Step 2: Get AI Response**
         let assistantResponse = await sendMessageToAssistant(userMessage, channelId);
 
         console.log("🟢 Assistant Response:", assistantResponse); 
         console.log("📤 Debug: Message Wix Chat Will Receive:", assistantResponse);
 
-        if (typeof assistantResponse !== "string" || assistantResponse.trim().length === "") {
+        if (typeof assistantResponse !== "string" || assistantResponse.trim() === "") {
             console.error("🚨 Invalid AI response format:", assistantResponse);
             assistantResponse = "⚠️ AI response was invalid.";
         }
 
+        // **Step 3: Send AI Response as a New Message**
         console.log("📤 Sending to Wix Chat:", assistantResponse);
-
         await wixChatBackend.sendMessage({
             messageText: assistantResponse,
             channelId: channelId,
