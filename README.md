@@ -17,6 +17,9 @@ Tutorials on learning generative AI in data analysis
      * [Tutorial](https://www.lbsocial.net/post/openai-assistant-automating-email-replies-for-professors-and-students)
 8. [Analyzing Data and Interpreting Images with OpenAI's o1 Reasoning Model vs. GPT](Openai_o1_Reasoning_vs_GPT.ipynb)
      * [Tutorial](https://www.lbsocial.net/post/openai-o1-reasoning-model-vs-gpt-smarter-ai-for-data-images)
+9. [Analyze Tweets with OpenAI Responses API](Analyze_Tweets_Responses_API.ipynb.ipynb)
+     * [Tutorial](https://www.lbsocial.net/post/openai-responses-api-advanced-tweet-analysis-with-file-web-search-integration)
+
 
 ## 🎥 Video Demos Available!
 Comprehensive video demos for these topics are available at **[LBSocial.net](https://lbsocial.net)**. Explore step-by-step tutorials and gain a deeper understanding of the concepts.
