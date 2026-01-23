@@ -24,9 +24,16 @@ Tutorials on learning generative AI in data analysis
 
 
 ## 🎥 Video Demos Available!
-Comprehensive video demos for these topics are available at **[LBSocial.net](https://lbsocial.net)**. Explore step-by-step tutorials and gain a deeper understanding of the concepts.
+Comprehensive video demos for these topics are available at **[LBSocial.net](https://lbsocial.net)**. Explore step-by-step tutorials and deepen your understanding of the concepts.
 
-## Recommended resources
-- OpenAI. n.d. *“OpenAI Documents.”* OpenAI. Accessed October 18, 2024. https://platform.openai.com.
-- DeepLearning.AI. n.d. *“DeepLearning.AI: Start or Advance Your Career in AI.”* Accessed October 29, 2024. https://www.deeplearning.ai/.
-- MongoDB. *“What Is MongoDB? - MongoDB Manual.”* Accessed October 31, 2024. https://www.mongodb.com/docs/manual/.
+## Textbook
+* **Social Data Analytics in the Cloud with AI**
+    * Authors: Xuebin Wei & Xinyue Ye
+    * Publisher: CRC Press / Routledge (2024)
+    * [Book URL](https://www.routledge.com/Social-Data-Analytics-in-the-Cloud-with-AI/Wei-Ye/p/book/9781032569055)
+
+## LBSocial Media Accounts
+* **Twitter:** [x.com/InfoLBsocial](https://x.com/InfoLBsocial)
+* **LinkedIn:** [linkedin.com/company/lbsocial-info](https://www.linkedin.com/company/lbsocial-info)
+* **Facebook:** [facebook.com/people/LBSocial/61571545943572](https://www.facebook.com/people/LBSocial/61571545943572)
+* **TikTok:** [tiktok.com/@lbsocialinfo](https://www.tiktok.com/@lbsocialinfo)
