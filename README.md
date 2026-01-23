@@ -20,7 +20,7 @@ Tutorials on learning generative AI in data analysis
 9. [Analyze Tweets with OpenAI Responses API](Analyze_Tweets_Responses_API.ipynb)
      * [Tutorial](https://www.lbsocial.net/post/openai-responses-api-advanced-tweet-analysis-with-file-web-search-integration)
 10. [Build a Multimodal "Smart Search" with MongoDB & AI](multimodal_search_engine_tutorial.ipynb)
-     * [Tutorial](https://lbsocial.net](https://www.lbsocial.net/post/build-multimodal-search-engine-python)
+     * [Tutorial](https://www.lbsocial.net/post/build-multimodal-search-engine-python)
 
 
 ## 🎥 Video Demos Available!
