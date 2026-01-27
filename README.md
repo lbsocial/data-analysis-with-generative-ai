@@ -31,6 +31,8 @@ Below is a list of the notebooks included in this repository, along with their c
    * [View Tutorial](https://www.lbsocial.net/post/openai-responses-api-advanced-tweet-analysis-with-file-web-search-integration)
 10. **[Build a Multimodal "Smart Search" with MongoDB & AI](multimodal_search_engine_tutorial.ipynb)**
     * [View Tutorial](https://www.lbsocial.net/post/build-multimodal-search-engine-python)
+11. **[Building a Social Media Knowledge Graph with Python & Neo4j](Social_Media_ETL_Neo4j_Python.ipynb)**
+    * [View Tutorial](https://www.lbsocial.net)
 
 ---
 
