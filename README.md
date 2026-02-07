@@ -33,6 +33,9 @@ Below is a list of the notebooks included in this repository, along with their c
     * [View Tutorial](https://www.lbsocial.net/post/build-multimodal-search-engine-python)
 11. **[Building a Social Media Knowledge Graph with Python & Neo4j](Social_Media_ETL_Neo4j_Python.ipynb)**
     * [View Tutorial](https://www.lbsocial.net/post/social-media-knowledge-graph-python-neo4j)
+12. **[GraphRAG: Retrieval-Augmented Generation with Neo4j Knowledge Graph](GraphRAG_Social_Media_Neo4j.ipynb)**
+    * [View Tutorial](https://github.com/lbsocial/data-analysis-with-generative-ai/blob/main/GraphRAG_Social_Media_Neo4j.ipynb)
+
 ---
 
 ## 📖 Textbook
