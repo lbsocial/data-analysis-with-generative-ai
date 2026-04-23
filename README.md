@@ -36,13 +36,6 @@ Below is a list of the notebooks included in this repository, along with their c
 12. **[GraphRAG: Retrieval-Augmented Generation with Neo4j Knowledge Graph](GraphRAG_Social_Media_Neo4j.ipynb)**
     * [View Tutorial](https://www.lbsocial.net/post/geo-graphrag-tutorial-neo4j-gemini) 
 
----
-
-## 📖 Textbook
-* **Title:** *Social Data Analytics in the Cloud with AI*
-* **Authors:** Xuebin Wei & Xinyue Ye
-* **Publisher:** CRC Press / Routledge (2024)
-* **Link:** [Purchase/View Book](https://www.routledge.com/Social-Data-Analytics-in-the-Cloud-with-AI/Wei-Ye/p/book/9781032569055)
 
 ---
 
